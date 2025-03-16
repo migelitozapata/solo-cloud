@@ -36,9 +36,11 @@ read -p "Introduce tu NGROK_TOKEN: " ngrok_token
 echo "Recuerda que el NGROK_DOMAIN tiene un formato similar a: tu-subdominio.ngrok-free.app"
 read -p "Introduce tu NGROK_DOMAIN: " ngrok_domain
 
-mkdir -p server
+user_name=$(whoami)
 
-docker_command="docker run -d --name $server_name -e NGROK_TOKEN=$ngrok_token -e NGROK_DOMAIN=$ngrok_domain -v config:/home/minecraft/.config -v /workspaces/server:/home/minecraft/server miguel18383/github-minecraft-server"
+mkdir -p workspaces/$user_name/server
+
+docker_command="docker run -d --name $server_name -e NGROK_TOKEN=$ngrok_token -e NGROK_DOMAIN=$ngrok_domain -v config:/home/minecraft/.config -v /workspaces/$user_name/server:/home/minecraft/server miguel18383/github-minecraft-server"
 
 eval $docker_command
 
