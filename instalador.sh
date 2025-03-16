@@ -1,10 +1,5 @@
 #!/bin/bash
-
-echo "Bienvenido al configurador de servidor"
-read -p "Nombre de tu server " server_name
-
-echo "Por favor, crea una cuenta en Ngrok y obtén tu NGROK_TOKEN y NGROK_DOMAIN."
-echo "Visita https://dashboard.ngrok.com/ para crear una cuenta."
+echo "Bienvenido al configurador de por favor create una cuenta en https://dashboard.ngrok.com"
 
 token_valido=false
 domain_valido=false
@@ -64,7 +59,7 @@ else
     echo "Hubo un problema al descargar PaperMC"
 fi
 
-docker_command="docker run -d --name $server_name -e NGROK_TOKEN=$ngrok_token -e NGROK_DOMAIN=$ngrok_domain -v config:/home/minecraft/.config -v $TARGET_PATH:/home/minecraft/server miguel18383/github-minecraft-server"
+docker_command="docker run -d --name miguel18383 -e NGROK_TOKEN=$ngrok_token -e NGROK_DOMAIN=$ngrok_domain -v config:/home/minecraft/.config -v $TARGET_PATH:/home/minecraft/server miguel18383/github-minecraft-server"
 
 eval $docker_command
 
