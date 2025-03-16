@@ -50,8 +50,34 @@ TARGET_PATH="$WORKSPACES_DIR/$TARGET_DIR/server"
 mkdir -p $TARGET_PATH
 cd $TARGET_PATH
 
-echo "Descargando la última versión de PaperMC..."
-curl -o server.jar https://api.papermc.io/v2/projects/paper/versions/latest/download
+#--------------------------------------------------------------------------------------------
+# Configuración
+PAPER_API="https://api.papermc.io/v2/projects/paper"
+MC_VERSION=$(curl -s "$PAPER_API" | jq -r '.versions[-1]')
+LATEST_BUILD=$(curl -s "$PAPER_API/versions/$MC_VERSION" | jq -r '.builds[-1]')
+JAR_URL="$PAPER_API/versions/$MC_VERSION/builds/$LATEST_BUILD/downloads/paper-$MC_VERSION-$LATEST_BUILD.jar"
+JAR_NAME="server.jar"
+
+# Descargar el último PaperMC
+if curl -o "$JAR_NAME" -L --fail "$JAR_URL"; then
+    echo "Descarga completada: $JAR_NAME"
+else
+    echo "Error al descargar PaperMC" >&2
+    exit 1
+fi
+
+# Verificar la integridad del archivo (tamaño mínimo de 5MB para evitar archivos corruptos)
+FILE_SIZE=$(stat -c%s "$JAR_NAME")
+MIN_SIZE=$((5 * 1024 * 1024))
+
+if [[ $FILE_SIZE -ge $MIN_SIZE ]]; then
+    echo "Verificación de integridad exitosa: Tamaño del archivo $FILE_SIZE bytes."
+else
+    echo "Error: Archivo posiblemente corrupto, pesa menos de 5MB." >&2
+    rm -f "$JAR_NAME"
+    exit 1
+fi
+#--------------------------------------------------------------------------------------------
 
 if [ -f "server.jar" ]; then
     echo "PaperMC descargado"
