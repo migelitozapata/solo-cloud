@@ -29,22 +29,39 @@ else
     echo "Hubo un problema al descargar PaperMC"
 fi
 
-clear
 echo "Bienvenido al configurador de Docker para PaperMC"
 read -p "Introduce el nombre de tu servidor Minecraft (esto se usará como --name): " server_name
+
 echo "Por favor, crea una cuenta en Ngrok y obtén tu NGROK_TOKEN y NGROK_DOMAIN."
 echo "Visita https://dashboard.ngrok.com/ para crear una cuenta."
-echo "Una vez que tengas tu NGROK_TOKEN, ingrésalo a continuación."
-read -p "Introduce tu NGROK_TOKEN: " ngrok_token
-echo "Recuerda que el NGROK_DOMAIN tiene un formato similar a: tu-subdominio.ngrok-free.app"
-read -p "Introduce tu NGROK_DOMAIN: " ngrok_domain
 
-docker_command="docker run -d --name $server_name -e NGROK_TOKEN=$ngrok_token -e NGROK_DOMAIN=$ngrok_domain -v config:/home/minecraft/.config -v /workspaces/$(basename $(pwd))/server:/home/minecraft/server miguel18383/github-minecraft-server"
+token_valido=false
+domain_valido=false
 
-eval $docker_command
+while [ "$token_valido" = false ]; do
+    read -p "Introduce tu NGROK_TOKEN: " ngrok_token
+    if [ -z "$ngrok_token" ]; then
+        echo "Error: No puedes dejar el NGROK_TOKEN vacío. Inténtalo de nuevo."
+    else
+        token_valido=true
+    fi
+done
+
+while [ "$domain_valido" = false ]; do
+    echo "Recuerda que el NGROK_DOMAIN tiene un formato similar a: tu-subdominio.ngrok-free.app"
+    read -p "Introduce tu NGROK_DOMAIN: " ngrok_domain
+    if [ -z "$ngrok_domain" ]; then
+        echo "Error: No puedes dejar el NGROK_DOMAIN vacío. Inténtalo de nuevo."
+    else
+        domain_valido=true
+    fi
+done
 
 ruta="/workspaces/$(basename $(pwd))/server"
-echo "La carpeta se ha creado en: $ruta"
+
+docker_command="docker run -d --name $server_name -e NGROK_TOKEN=$ngrok_token -e NGROK_DOMAIN=$ngrok_domain -v config:/home/minecraft/.config -v $ruta:/home/minecraft/server miguel18383/github-minecraft-server"
+
+eval $docker_command
 
 echo "Gracias por usar el instalador par github :D no te olvides de regalar tu estrellita gracias :D"
 
