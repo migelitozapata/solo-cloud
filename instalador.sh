@@ -43,5 +43,8 @@ docker_command="docker run -d --name $server_name -e NGROK_TOKEN=$ngrok_token -e
 
 eval $docker_command
 
+ruta="/workspaces/$(basename $(pwd))/server"
+echo "La carpeta se ha creado en: $ruta"
+
 echo "Gracias por usar el instalador par github :D no te olvides de regalar tu estrellita gracias :D"
 
