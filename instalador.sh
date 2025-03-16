@@ -1,6 +1,7 @@
 #!/bin/bash
 
 sudo apt-get update -y && sudo apt-get upgrade -y
+sudo apt-get remove --purge moby-tini -y
 sudo apt-get install -y ca-certificates curl
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
