@@ -1,4 +1,11 @@
 #!/bin/bash
+
+echo "Bienvenido al configurador de servidor"
+read -p "Nombre de tu server " server_name
+
+echo "Por favor, crea una cuenta en Ngrok y obtén tu NGROK_TOKEN y NGROK_DOMAIN."
+echo "Visita https://dashboard.ngrok.com/ para crear una cuenta."
+
 token_valido=false
 domain_valido=false
 
@@ -35,12 +42,6 @@ echo \
 
 sudo apt-get update -y
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-echo "Bienvenido al configurador de Docker para PaperMC"
-read -p "Introduce el nombre de tu servidor Minecraft (esto se usará como --name): " server_name
-
-echo "Por favor, crea una cuenta en Ngrok y obtén tu NGROK_TOKEN y NGROK_DOMAIN."
-echo "Visita https://dashboard.ngrok.com/ para crear una cuenta."
 
 WORKSPACES_DIR="/workspaces"
 TARGET_DIR=$(ls -1 $WORKSPACES_DIR | grep -v '^\.' | head -n 1)
