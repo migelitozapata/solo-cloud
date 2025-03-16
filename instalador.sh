@@ -21,10 +21,10 @@ mkdir -p /workspaces/$(basename $(pwd))/server
 cd /workspaces/$(basename $(pwd))/server
 
 echo "Descargando la última versión de PaperMC..."
-curl -o paperclip.jar https://api.papermc.io/v2/projects/paper/versions/latest/download
+curl -o server.jar https://api.papermc.io/v2/projects/paper/versions/latest/download
 
-if [ -f "paperclip.jar" ]; then
-    echo "PaperMC descargado con éxito en ~/server/paperclip.jar"
+if [ -f "server.jar" ]; then
+    echo "PaperMC descargado"
 else
     echo "Hubo un problema al descargar PaperMC"
 fi
