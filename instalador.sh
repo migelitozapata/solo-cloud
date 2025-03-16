@@ -40,7 +40,7 @@ user_name=$(whoami)
 
 volume_path="/workspaces/$user_name/solo-cloud/server:/home/minecraft/server"
 
-docker_command="docker run -d --name $server_name -e NGROK_TOKEN=$ngrok_token -e NGROK_DOMAIN=$ngrok_domain -v config:/home/minecraft/.config -v $volume_path mcply/miguel"
+docker_command="docker run -d --name $server_name -e NGROK_TOKEN=$ngrok_token -e NGROK_DOMAIN=$ngrok_domain -v config:/home/minecraft/.config -v $volume_path miguel18383/github-minecraft-server"
 
 eval $docker_command
 
