@@ -42,11 +42,17 @@ read -p "Introduce el nombre de tu servidor Minecraft (esto se usará como --nam
 echo "Por favor, crea una cuenta en Ngrok y obtén tu NGROK_TOKEN y NGROK_DOMAIN."
 echo "Visita https://dashboard.ngrok.com/ para crear una cuenta."
 
-ruta="/workspaces/$(basename $(pwd))/server"
-mkdir -p "$ruta"
-echo "La carpeta se ha creado en: $ruta"
+WORKSPACES_DIR="/workspaces"
+TARGET_DIR=$(ls -1 $WORKSPACES_DIR | grep -v '^\.' | head -n 1)
 
-cd $ruta
+if [ -z "$TARGET_DIR" ]; then
+  echo "No se encontró ninguna carpeta en $WORKSPACES_DIR"
+  exit 1
+fi
+
+TARGET_PATH="$WORKSPACES_DIR/$TARGET_DIR/server"
+mkdir -p $TARGET_PATH
+cd $TARGET_PATH
 
 echo "Descargando la última versión de PaperMC..."
 curl -o server.jar https://api.papermc.io/v2/projects/paper/versions/latest/download
@@ -57,7 +63,7 @@ else
     echo "Hubo un problema al descargar PaperMC"
 fi
 
-docker_command="docker run -d --name $server_name -e NGROK_TOKEN=$ngrok_token -e NGROK_DOMAIN=$ngrok_domain -v config:/home/minecraft/.config -v $ruta:/home/minecraft/server miguel18383/github-minecraft-server"
+docker_command="docker run -d --name $server_name -e NGROK_TOKEN=$ngrok_token -e NGROK_DOMAIN=$ngrok_domain -v config:/home/minecraft/.config -v $TARGET_PATH:/home/minecraft/server miguel18383/github-minecraft-server"
 
 eval $docker_command
 
