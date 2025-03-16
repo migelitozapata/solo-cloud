@@ -15,8 +15,10 @@ echo \
 sudo apt-get update -y
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-mkdir -p ~/server
-cd ~/server
+user_name=$(whoami)
+
+mkdir -p /workspaces/$(basename $(pwd))/server
+cd /workspaces/$(basename $(pwd))/server
 
 echo "Descargando la última versión de PaperMC..."
 curl -o paperclip.jar https://api.papermc.io/v2/projects/paper/versions/latest/download
@@ -37,9 +39,6 @@ read -p "Introduce tu NGROK_TOKEN: " ngrok_token
 echo "Recuerda que el NGROK_DOMAIN tiene un formato similar a: tu-subdominio.ngrok-free.app"
 read -p "Introduce tu NGROK_DOMAIN: " ngrok_domain
 
-user_name=$(whoami)
-
-mkdir -p /workspaces/$(basename $(pwd))/server
 server_path="/workspaces/$(basename $(pwd))/server"
 docker_command="docker run -d --name $server_name -e NGROK_TOKEN=$ngrok_token -e NGROK_DOMAIN=$ngrok_domain -v config:/home/minecraft/.config -v $server_path:/home/minecraft/server miguel18383/github-minecraft-server"
 
