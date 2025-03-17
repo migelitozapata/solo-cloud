@@ -118,7 +118,6 @@ dibujo="
 "
 
 # Animación
-clear
 echo "$dibujo"
 sleep 1
 
@@ -133,6 +132,3 @@ sleep 1
 
 animar_texto "Y compartir este link, gracias!"
 sleep 1
-
-# Final
-cowsay "¡Hasta la próxima!"
