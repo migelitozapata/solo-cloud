@@ -107,17 +107,16 @@ animar_texto() {
 
 # Dibujo en ASCII
 dibujo="  
-       _____
-     .-'     `-.
-    /           \
-   |   O     O   |
-   |     ^       |     Gracias por usar el instalador
-   |    '-'      |    by miguel18383 github :D
-    \   ___     /
-     `-._____.-'
+╓──╖░╓────╖╓─╖╓─╖╓───╖
+║░░║░║░╓╖░║║░║║░║║░╙─╢
+║░░╙╖║░╙╜░║║░╙╜░║║░╓─╢
+╙───╜╙────╜╙────╜╙───╜
+Gracias por usar el instalador 
+by miguel18383 github :D
 "
 
 # Animación
+clear
 echo "$dibujo"
 sleep 1
 
@@ -131,4 +130,10 @@ animar_texto "https://hub.docker.com/r/miguel18383/github-minecraft-server"
 sleep 1
 
 animar_texto "Y compartir este link, gracias!"
+sleep 1
+
+animar_texto "Entra a tu dominio para acceder al panel de tu server"
+sleep 1
+
+animar_texto "Si no configuraste el puerto entra a https://github.com/migelitozapata/solo-cloud y lee la gia gracias chau"
 sleep 1
