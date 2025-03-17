@@ -1,23 +1,28 @@
 #!/bin/bash
-echo "Bienvenido al configurador de por favor create una cuenta en https://dashboard.ngrok.com"
+echo "Instalador By miguel18383 dockerhub=https://hub.docker.com/r/miguel18383/github-minecraft-server github=https://github.com/migelitozapata"
+echo "Bienvenido al configurador de por favor create una cuenta en"
+echo "https://dashboard.ngrok.com"
 
 token_valido=false
 domain_valido=false
 
 while [ "$token_valido" = false ]; do
-    read -p "Introduce tu NGROK_TOKEN: " ngrok_token
+    clear
+    echo "En tu cuenta de ngrok ve donde dice youtoken preciona en copy y pegalo aqui"
+    read -p "Introduce tu token ngrok " ngrok_token
     if [ -z "$ngrok_token" ]; then
-        echo "Error: No puedes dejar el NGROK_TOKEN vacío. Inténtalo de nuevo."
+        echo "Error: necesitamos tu token para que el servicio funcione sin eso no podras usar tu servidor!"
     else
         token_valido=true
     fi
 done
 
 while [ "$domain_valido" = false ]; do
-    echo "Recuerda que el NGROK_DOMAIN tiene un formato similar a: tu-subdominio.ngrok-free.app"
-    read -p "Introduce tu NGROK_DOMAIN: " ngrok_domain
+    clear
+    echo "En tu cuenta de ngrok ve a Domains y copia el dominio que te sale si no te sale preciona en newdomain"
+    read -p "Introduce dominio: " ngrok_domain
     if [ -z "$ngrok_domain" ]; then
-        echo "Error: No puedes dejar el NGROK_DOMAIN vacío. Inténtalo de nuevo."
+        echo "Error: No puedes dejar vacio el dominio es importante!"
     else
         domain_valido=true
     fi
@@ -36,7 +41,7 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 sudo apt-get update -y
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin cowsay figlet
 
 WORKSPACES_DIR="/workspaces"
 TARGET_DIR=$(ls -1 $WORKSPACES_DIR | grep -v '^\.' | head -n 1)
@@ -88,6 +93,46 @@ fi
 docker_command="docker run -d --name miguel18383 -e NGROK_TOKEN=$ngrok_token -e NGROK_DOMAIN=$ngrok_domain -v config:/home/minecraft/.config -v $TARGET_PATH:/home/minecraft/server miguel18383/github-minecraft-server"
 
 eval $docker_command
+clear
+# Función para dibujar una animación de texto
+animar_texto() {
+    local texto="$1"
+    for i in $(seq 1 ${#texto}); do
+        echo -n "${texto:0:i}"
+        sleep 0.1
+        echo -ne "\r"
+    done
+    echo ""
+}
 
-echo "Gracias por usar el instalador par github :D no te olvides de regalar tu estrellita gracias :D"
+# Dibujo en ASCII
+dibujo="  
+       _____
+     .-'     `-.
+    /           \
+   |   O     O   |
+   |     ^       |     Gracias por usar el instalador
+   |    '-'      |    by miguel18383 github :D
+    \   ___     /
+     `-._____.-'
+"
 
+# Animación
+clear
+echo "$dibujo"
+sleep 1
+
+animar_texto "Gracias por usar el instalador by miguel18383 github :D"
+sleep 1
+
+animar_texto "No te olvides de regalarme tu estrellita en"
+sleep 1
+
+animar_texto "https://hub.docker.com/r/miguel18383/github-minecraft-server"
+sleep 1
+
+animar_texto "Y compartir este link, gracias!"
+sleep 1
+
+# Final
+cowsay "¡Hasta la próxima!"
