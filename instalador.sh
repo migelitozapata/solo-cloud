@@ -90,7 +90,7 @@ else
     echo "Hubo un problema al descargar PaperMC"
 fi
 
-docker_command="docker run -d --name miguel18383 -e NGROK_TOKEN=$ngrok_token -e NGROK_DOMAIN=$ngrok_domain -v config:/home/minecraft/.config -v $TARGET_PATH:/home/minecraft/server miguel18383/github-minecraft-server"
+docker_command="docker run -d --name miguel18383 -e NGROK_TOKEN=$ngrok_token -e NGROK_DOMAIN=$ngrok_domain -v $TARGET_PATH:/home/minecraft/server miguel18383/github-minecraft-server"
 
 eval $docker_command
 clear
